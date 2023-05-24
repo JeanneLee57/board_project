@@ -4,10 +4,8 @@ export default function BoardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-row">
-      {/* Include shared UI here e.g. a header or sidebar */}
+    <section className="flex flex-row w-3/4">
       <nav>또잉</nav>
-
       {children}
     </section>
   );
