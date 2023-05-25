@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/layouts/Header";
+import Footer from "@/layouts/Footer";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
@@ -18,8 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`min-h-screen h-full flex flex-col ${inter.className}
+`}
+      >
+        {/* @ts-expect-error Async Server Component */}
         <Header /> {children}
+        <Footer />
       </body>
     </html>
   );
