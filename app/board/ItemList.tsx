@@ -1,18 +1,32 @@
 import { ObjectId } from "mongodb";
-import ItemCard from "./ItemCard";
-import { connectDB } from "@/util/database";
 import PageNums from "./PageNums";
-import tw from "tailwind-styled-components";
-export default async function () {
-  //쿼리파라미터 페이지 값을 받으면 해당하는 페이지의 글 목록을 끊어서 표시하도록
-  const client = await connectDB;
-  const db = client.db("forum");
-  const result = await db.collection("post").find().toArray();
 
+interface ItemProps {
+  items: {
+    _id: ObjectId;
+    title: string;
+    content: string;
+    author: string;
+    likes: string;
+    comment:
+      | {
+          id: number;
+          content: string;
+          author: string;
+          likes: string;
+          date: string;
+        }[]
+      | null;
+    category: string;
+    date: string;
+  }[];
+}
+
+const ItemList: React.FC<ItemProps> = (props) => {
   return (
     <article>
       <ul role="list" className="divide-y divide-gray-200">
-        {result.map((item) => (
+        {props.items.map((item) => (
           <li className="flex relative gap-x-6 py-5">
             <div>
               <p>{item.category}</p>
@@ -24,7 +38,7 @@ export default async function () {
               </p>
               <div>
                 <span className="mr-3">좋아요 {item.likes}</span>
-                <span>댓글 {item.comment.length}</span>
+                <span>댓글 {item.comment ? item.comment.length : "0"}</span>
               </div>
             </div>
             <div className="mt-3 mb-3 bottom-0 flex flex-col justify-between">
@@ -40,4 +54,6 @@ export default async function () {
       <PageNums />
     </article>
   );
-}
+};
+
+export default ItemList;
