@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import PageNums from "./PageNums";
+import { useSearchParams } from "next/navigation";
 
 interface ItemProps {
   items: {
@@ -23,6 +24,7 @@ interface ItemProps {
 }
 
 const ItemList: React.FC<ItemProps> = (props) => {
+  const itemsCount = props.items.length;
   return (
     <article>
       <ul role="list" className="divide-y divide-gray-200">
@@ -51,7 +53,7 @@ const ItemList: React.FC<ItemProps> = (props) => {
           </li>
         ))}
       </ul>
-      <PageNums />
+      {/* <PageNums count={itemsCount} /> */}
     </article>
   );
 };
