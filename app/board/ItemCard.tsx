@@ -6,18 +6,20 @@ export interface Item {
   content: string;
   author: string;
   likes: string;
-  comment: {
-    id: number;
-    content: string;
-    author: string;
-    likes: string;
-    date: string;
-  }[];
+  comment:
+    | {
+        id: number;
+        content: string;
+        author: string;
+        likes: string;
+        date: string;
+      }[]
+    | null;
   category: string;
   date: string;
 }
 
-const ItemCard: React.FC<Item> = (props) => {
+const ItemCard = (props: Item) => {
   const commentLen = props.comment ? props.comment.length : "0";
   return (
     <li className="border-2 border-solid border-indigo-600">

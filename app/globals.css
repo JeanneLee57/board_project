@@ -21,3 +21,12 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+@layer base {
+  h1 {
+    @apply text-2xl mt-5 mb-5;
+  }
+  h2 {
+    @apply text-xl;
+  }
+}
