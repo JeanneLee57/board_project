@@ -1,15 +1,37 @@
+import { useSearchParams } from "next/navigation";
 import ItemList from "./ItemList";
+import Button from "@/components/Button";
 import { connectDB } from "@/util/database";
 
-export default async function Board() {
-  //쿼리파라미터 페이지 값을 받으면 해당하는 페이지의 글 목록을 끊어서 표시하도록
+export const ITEMS_PER_PAGE = 1;
+
+export default async function Board(props: {
+  searchParams: { page?: string };
+}) {
+  const page = props.searchParams.page;
   const client = await connectDB;
   const db = client.db("forum");
-  const items = await db.collection("post").find().toArray();
+  const itemCount = await db.collection("post").countDocuments();
+  const pageNum = Math.ceil(itemCount / ITEMS_PER_PAGE);
+  const divs = [];
+  for (let i = 1; i <= pageNum; i++) {
+    divs.push(<Button count={i} />);
+  }
+
+  const items = page
+    ? await db
+        .collection("post")
+        .find()
+        .skip(ITEMS_PER_PAGE * (+page - 1))
+        .limit(ITEMS_PER_PAGE)
+        .toArray()
+    : await db.collection("post").find().limit(ITEMS_PER_PAGE).toArray();
+
   return (
     <div className="h-full">
       <h1 className="h-full">게시글 페이지</h1>
       <ItemList items={items} />
+      <div className="flex flex-row gap-4">{divs}</div>
     </div>
   );
 }
