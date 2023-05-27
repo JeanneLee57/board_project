@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
-import PageNums from "./PageNums";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 interface ItemProps {
   items: {
@@ -29,12 +28,14 @@ const ItemList: React.FC<ItemProps> = (props) => {
     <article>
       <ul role="list" className="divide-y divide-gray-200">
         {props.items.map((item) => (
-          <li className="flex relative gap-x-6 py-5">
+          <li id={item._id} className="flex relative gap-x-6 py-5">
             <div>
               <p>{item.category}</p>
-              <h2 className="font-semibold leading-6 mt-3 mb-3 text-gray-900">
-                {item.title}
-              </h2>
+              <Link href={`/board/detail/${item._id}`}>
+                <h2 className="font-semibold leading-6 mt-3 mb-3 text-gray-900">
+                  {item.title}
+                </h2>
+              </Link>
               <p className="mt-3 mb-4 text-ellipsis leading-5 text-gray-500">
                 {item.content.substring(0, 200)}
               </p>
@@ -44,16 +45,17 @@ const ItemList: React.FC<ItemProps> = (props) => {
               </div>
             </div>
             <div className="mt-3 mb-3 bottom-0 flex flex-col justify-between">
-              <p></p>
+              <p>{item.author}</p>
               <div>
-                <p className="text-right  mr-3 mb-1">{item.author}</p>
-                <p className="text-gray-500 text-right mr-3">{item.date}</p>
+                <p className="text-right  mr-3 mb-1"></p>
+                <p className="text-gray-500 text-right mr-3 w-24">
+                  {item.date}
+                </p>
               </div>
             </div>
           </li>
         ))}
       </ul>
-      {/* <PageNums count={itemsCount} /> */}
     </article>
   );
 };
