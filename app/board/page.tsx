@@ -1,4 +1,3 @@
-import { useSearchParams } from "next/navigation";
 import ItemList from "./ItemList";
 import Button from "@/components/Button";
 import { connectDB } from "@/util/database";
