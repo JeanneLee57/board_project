@@ -1,25 +1,27 @@
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 
+export interface Comment {
+  id: number;
+  content: string;
+  author: string;
+  likes: string;
+  date: string;
+}
+
+export interface Item {
+  _id: ObjectId;
+  title: string;
+  content: string;
+  category: string;
+  author: string;
+  likes: string;
+  comment: Comment[] | null;
+  date: string;
+}
+
 interface ItemProps {
-  items: {
-    _id: ObjectId;
-    title: string;
-    content: string;
-    author: string;
-    likes: string;
-    comment:
-      | {
-          id: number;
-          content: string;
-          author: string;
-          likes: string;
-          date: string;
-        }[]
-      | null;
-    category: string;
-    date: string;
-  }[];
+  items: Item[];
 }
 
 const ItemList: React.FC<ItemProps> = (props) => {
@@ -49,7 +51,7 @@ const ItemList: React.FC<ItemProps> = (props) => {
               <div>
                 <p className="text-right  mr-3 mb-1"></p>
                 <p className="text-gray-500 text-right mr-3 w-24">
-                  {item.date}
+                  {item.date.slice(0, 10)}
                 </p>
               </div>
             </div>

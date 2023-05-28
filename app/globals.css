@@ -30,3 +30,12 @@ body {
     @apply text-xl;
   }
 }
+
+input {
+  outline: none;
+}
+
+textarea {
+  outline: none;
+  resize: none;
+}

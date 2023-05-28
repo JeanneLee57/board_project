@@ -2,8 +2,8 @@ import { connectDB } from "@/util/database";
 import ItemList from "../ItemList";
 import { ITEMS_PER_PAGE } from "../page";
 import Button from "@/components/Button";
+import { EngtoKor } from "@/util/convertCategory";
 
-//props로 url의 정보를 받는다.
 export default async function Category(props: {
   params: { category: string };
   searchParams: { page?: string };
@@ -23,17 +23,20 @@ export default async function Category(props: {
     ? await db
         .collection("post")
         .find({ category: props.params.category })
+        .sort({ date: -1 })
         .skip(ITEMS_PER_PAGE * (+page - 1))
         .limit(ITEMS_PER_PAGE)
         .toArray()
     : await db
         .collection("post")
         .find({ category: props.params.category })
+        .sort({ date: -1 })
+        .limit(ITEMS_PER_PAGE)
         .toArray();
 
   return (
     <div className="h-full">
-      <h1 className="h-full">{props.params.category} 페이지</h1>
+      <h1 className="h-full">{EngtoKor(props.params.category)} 페이지</h1>
       <ItemList items={items} />
       <div className="flex flex-row gap-4">{divs}</div>
     </div>
