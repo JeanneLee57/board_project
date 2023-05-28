@@ -1,44 +1,55 @@
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/util/database";
 
+interface Comment {
+  id: string;
+  content: string;
+  author: string;
+  likes: string;
+  date: string;
+}
+
 interface Item {
   _id: ObjectId;
   title: string;
   content: string;
   author: string;
   likes: string;
-  comment:
-    | {
-        id: number;
-        content: string;
-        author: string;
-        likes: string;
-        date: string;
-      }[]
-    | null;
+  comment: Comment[];
   category: string;
   date: string;
 }
 
-//props로 url의 정보를 받는다.
-export default async function Detail(props) {
+export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
   const item = await db
     .collection("post")
     .findOne({ _id: new ObjectId(props.params.postId) });
 
+  if (!item) return <h1>게시물을 찾을 수 없습니다.</h1>;
+
   return (
-    <article>
-      <h1>{item.title}</h1>
-      <p>{item.category}</p>
-      <p>{item.content}</p>
-      <p>
-        {item.comment ? (
-          item.comment.map((comment) => <div>{comment.author}</div>)
+    <main className="w-3/4 mt-10">
+      {" "}
+      <article className="mb-10">
+        <p>{item.category}</p>
+        <h1>{item.title}</h1>
+        <p>{item.content}</p>
+      </article>{" "}
+      <div>
+        {item.comment.length ? (
+          item.comment.map((comment) => (
+            <div key={comment.id}>
+              <span className="mr-4">{comment.author}</span>
+              <span>{comment.date}</span>
+              <p>{comment.content}</p>
+              <p>좋아요 {comment.likes}</p>
+            </div>
+          ))
         ) : (
           <div>댓글이 없어잉..</div>
         )}
-      </p>
-    </article>
+      </div>
+    </main>
   );
 }
