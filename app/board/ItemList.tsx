@@ -28,7 +28,7 @@ const ItemList: React.FC<ItemProps> = (props) => {
     <article>
       <ul role="list" className="divide-y divide-gray-200">
         {props.items.map((item) => (
-          <li id={item._id} className="flex relative gap-x-6 py-5">
+          <li key={item._id.toString()} className="flex relative gap-x-6 py-5">
             <div>
               <p>{item.category}</p>
               <Link href={`/board/detail/${item._id}`}>
