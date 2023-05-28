@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { connectDB } from "@/util/database.js";
+import { connectDB } from "@/util/database";
 
 interface Item {
   _id: ObjectId;
@@ -22,9 +22,8 @@ interface Item {
 
 //props로 url의 정보를 받는다.
 export default async function Detail(props) {
-  const client = await connectDB;
-  const db = client.db("forum");
-  const item: Item = await db
+  let db = (await connectDB).db("forum");
+  const item = await db
     .collection("post")
     .findOne({ _id: new ObjectId(props.params.postId) });
 
