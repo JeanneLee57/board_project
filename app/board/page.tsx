@@ -33,10 +33,10 @@ export default async function Board(props: {
         .toArray();
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       <h1 className="h-full">게시글 페이지</h1>
       <ItemList items={items} />
-      <div className="flex flex-row gap-4">{divs}</div>
+      <div className="flex flex-row justify-center gap-4">{divs}</div>
     </div>
   );
 }

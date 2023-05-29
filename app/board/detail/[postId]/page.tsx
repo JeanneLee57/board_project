@@ -18,7 +18,7 @@ export default async function Detail(props: { params: { postId: string } }) {
         <h1>{item.title}</h1>
         <p>{item.content}</p>
       </article>{" "}
-      <div>
+      <div className="mb-10">
         {item.comment ? (
           item.comment.map((comment) => (
             <div key={comment.id}>

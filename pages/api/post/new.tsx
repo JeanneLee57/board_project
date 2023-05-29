@@ -20,10 +20,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const sessionRes = await getServerSession(req, res, authOptions);
-  const currentDate = new Date();
   var tzoffset = new Date().getTimezoneOffset() * 60000;
   var localISOTime = new Date(Date.now() - tzoffset).toISOString().slice(0, -1);
-  //const currentDateToString = currentDate.toISOString();
   const updatedData: Item = req.body;
   updatedData.category = KortoEng(req.body.category);
   updatedData.author = sessionRes!.user!.name!;

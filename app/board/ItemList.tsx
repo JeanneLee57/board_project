@@ -1,3 +1,4 @@
+import { EngtoKor } from "@/util/convertCategory";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 
@@ -27,12 +28,15 @@ interface ItemProps {
 const ItemList: React.FC<ItemProps> = (props) => {
   const itemsCount = props.items.length;
   return (
-    <article>
-      <ul role="list" className="divide-y divide-gray-200">
+    <article className="w-full">
+      <ul role="list" className="divide-y divide-gray-200 w-full">
         {props.items.map((item) => (
-          <li key={item._id.toString()} className="flex relative gap-x-6 py-5">
+          <li
+            key={item._id.toString()}
+            className="flex justify-between relative gap-x-6 py-5 w-full"
+          >
             <div>
-              <p>{item.category}</p>
+              <p>{EngtoKor(item.category)}</p>
               <Link href={`/board/detail/${item._id}`}>
                 <h2 className="font-semibold leading-6 mt-3 mb-3 text-gray-900">
                   {item.title}
