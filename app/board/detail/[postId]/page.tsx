@@ -1,28 +1,10 @@
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/util/database";
-
-interface Comment {
-  id: string;
-  content: string;
-  author: string;
-  likes: string;
-  date: string;
-}
-
-interface Item {
-  _id: ObjectId;
-  title: string;
-  content: string;
-  author: string;
-  likes: string;
-  comment: Comment[];
-  category: string;
-  date: string;
-}
+import { Item } from "../../ItemList";
 
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
-  const item = await db
+  const item: Item = await db
     .collection("post")
     .findOne({ _id: new ObjectId(props.params.postId) });
 
@@ -36,8 +18,8 @@ export default async function Detail(props: { params: { postId: string } }) {
         <h1>{item.title}</h1>
         <p>{item.content}</p>
       </article>{" "}
-      <div>
-        {item.comment.length ? (
+      <div className="mb-10">
+        {item.comment ? (
           item.comment.map((comment) => (
             <div key={comment.id}>
               <span className="mr-4">{comment.author}</span>
