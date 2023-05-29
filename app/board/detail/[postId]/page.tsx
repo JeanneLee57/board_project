@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { connectDB } from "@/util/database";
 import { Item } from "../../ItemList";
+import Link from "next/link";
 
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
@@ -17,9 +18,10 @@ export default async function Detail(props: { params: { postId: string } }) {
         <p>{item.category}</p>
         <h1>{item.title}</h1>
         <p>{item.content}</p>
+        <Link href={`/board/edit/${item._id}`}>✏️</Link>
       </article>{" "}
       <div className="mb-10">
-        {item.comment ? (
+        {item.comment.length ? (
           item.comment.map((comment) => (
             <div key={comment.id}>
               <span className="mr-4">{comment.author}</span>
@@ -29,7 +31,7 @@ export default async function Detail(props: { params: { postId: string } }) {
             </div>
           ))
         ) : (
-          <div>댓글이 없어잉..</div>
+          <div>댓글이 없어잉..🥲</div>
         )}
       </div>
     </main>

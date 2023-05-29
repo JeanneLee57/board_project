@@ -6,28 +6,29 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Item } from "@/app/board/ItemList";
 import { KortoEng } from "@/util/convertCategory";
 
-interface ExtendedNextApiRequest extends NextApiRequest {
-  body: {
-    author: string;
-    likes: string;
-    comment: Comment[];
-    date: string;
-  };
-}
+type KeysToAdd = Pick<
+  Item,
+  "category" | "author" | "date" | "likes" | "comment"
+>;
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const sessionRes = await getServerSession(req, res, authOptions);
-  var tzoffset = new Date().getTimezoneOffset() * 60000;
-  var localISOTime = new Date(Date.now() - tzoffset).toISOString().slice(0, -1);
-  const updatedData: Item = req.body;
-  updatedData.category = KortoEng(req.body.category);
-  updatedData.author = sessionRes!.user!.name!;
-  updatedData.likes = "0";
-  updatedData.comment = [];
-  updatedData.date = localISOTime;
+  const tzoffset = new Date().getTimezoneOffset() * 60000;
+  const localISOTime = new Date(Date.now() - tzoffset)
+    .toISOString()
+    .slice(0, -1);
+
+  const keysToAdd: KeysToAdd = {
+    category: KortoEng(req.body.category),
+    author: sessionRes!.user!.name!,
+    likes: "0",
+    comment: [],
+    date: localISOTime,
+  };
+  const updatedData: Item = { ...req.body, ...keysToAdd };
 
   if (req.method == "POST") {
     const db = (await connectDB).db("forum");
