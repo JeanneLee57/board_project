@@ -17,7 +17,7 @@ export interface Item {
   category: string;
   author: string;
   likes: string;
-  comment: Comment[] | null;
+  comment: Comment[];
   date: string;
 }
 
@@ -47,7 +47,7 @@ const ItemList: React.FC<ItemProps> = (props) => {
               </p>
               <div>
                 <span className="mr-3">좋아요 {item.likes}</span>
-                <span>댓글 {item.comment ? item.comment.length : "0"}</span>
+                <span>댓글 {item.comment.length}</span>
               </div>
             </div>
             <div className="mt-3 mb-3 bottom-0 flex flex-col justify-between">

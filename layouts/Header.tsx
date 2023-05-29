@@ -28,13 +28,15 @@ export default async function Header() {
               <span className="font-bold mr-0.5">{sessionRes.user!.name!}</span>
               님 안녕하세요!
             </p>{" "}
-            <Image
-              className="rounded-full mr-3"
-              src={sessionRes.user!.image!}
-              alt="유저 프로필"
-              width={50}
-              height={50}
-            />
+            <Link href="/mypage">
+              <Image
+                className="rounded-full mr-3"
+                src={sessionRes.user!.image!}
+                alt="유저 프로필"
+                width={50}
+                height={50}
+              />
+            </Link>
             <SignOut />
           </span>
         ) : (
