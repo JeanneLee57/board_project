@@ -1,6 +1,7 @@
 import { EngtoKor } from "@/util/convertCategory";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
+import { WithId, Document } from "mongodb";
 
 export interface Comment {
   id: number;
@@ -10,7 +11,7 @@ export interface Comment {
   date: string;
 }
 
-export interface Item {
+export interface Item extends WithId<Document> {
   _id: ObjectId;
   title: string;
   content: string;

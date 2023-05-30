@@ -30,7 +30,7 @@ export default async function handler(
   };
   const updatedData: Item = { ...req.body, ...keysToAdd };
 
-  if (req.method == "POST") {
+  if (req.method === "POST") {
     const db = (await connectDB).db("forum");
     let result = await db.collection("post").insertOne(updatedData);
     res.redirect(302, "/board");
