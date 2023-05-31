@@ -3,6 +3,7 @@ import ItemList from "../ItemList";
 import { ITEMS_PER_PAGE } from "../page";
 import Button from "@/components/Button";
 import { EngtoKor } from "@/util/convertCategory";
+import { Item } from "../ItemList";
 
 export default async function Category(props: {
   params: { category: string };
@@ -10,7 +11,7 @@ export default async function Category(props: {
 }) {
   let db = (await connectDB).db("forum");
   const itemCount = await db
-    .collection("post")
+    .collection<Item>("post")
     .find({ category: props.params.category })
     .count();
   const pageNum = Math.ceil(itemCount / ITEMS_PER_PAGE);
@@ -21,14 +22,14 @@ export default async function Category(props: {
   const page = props.searchParams.page;
   let items = page
     ? await db
-        .collection("post")
+        .collection<Item>("post")
         .find({ category: props.params.category })
         .sort({ date: -1 })
         .skip(ITEMS_PER_PAGE * (+page - 1))
         .limit(ITEMS_PER_PAGE)
         .toArray()
     : await db
-        .collection("post")
+        .collection<Item>("post")
         .find({ category: props.params.category })
         .sort({ date: -1 })
         .limit(ITEMS_PER_PAGE)
