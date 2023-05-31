@@ -1,6 +1,7 @@
 import ItemList from "./ItemList";
 import Button from "@/components/Button";
 import { connectDB } from "@/util/database";
+import { Item } from "./ItemList";
 
 export const ITEMS_PER_PAGE = 1;
 
@@ -19,14 +20,14 @@ export default async function Board(props: {
 
   const items = page
     ? await db
-        .collection("post")
+        .collection<Item>("post")
         .find()
         .sort({ date: -1 })
         .skip(ITEMS_PER_PAGE * (+page - 1))
         .limit(ITEMS_PER_PAGE)
         .toArray()
     : await db
-        .collection("post")
+        .collection<Item>("post")
         .find()
         .sort({ date: -1 })
         .limit(ITEMS_PER_PAGE)
