@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import Error from "@/components/Error";
+import DeleteBtn from "@/components/DeleteBtn";
 
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
@@ -17,14 +18,16 @@ export default async function Detail(props: { params: { postId: string } }) {
 
   return (
     <main className="w-3/4 mt-10">
-      {" "}
       <article className="mb-10">
         <p>{item.category}</p>
-        <h1>{item.title}</h1>
-        <p>{item.content}</p>
+        <h1>{item.title}</h1>{" "}
         {session!.user!.name! === item.author && (
-          <Link href={`/board/edit/${item._id}`}>✏️</Link>
+          <div className="gap-4">
+            <Link href={`/board/edit/${item._id}`}>✏️</Link>
+            <DeleteBtn postId={item._id.toString()} />
+          </div>
         )}
+        <p>{item.content}</p>
       </article>
       <div className="mb-10">
         {item.comment.length ? (
