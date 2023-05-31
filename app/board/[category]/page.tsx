@@ -36,10 +36,12 @@ export default async function Category(props: {
         .toArray();
 
   return (
-    <div className="h-full">
-      <h1 className="h-full">{EngtoKor(props.params.category)} 페이지</h1>
+    <main className="h-full w-full mt-12 mb-20">
+      <h1 className="h-full w-80 border-b border-gray-400 pb-6 mb-4">
+        {EngtoKor(props.params.category)}
+      </h1>
       <ItemList items={items} />
-      <div className="flex flex-row gap-4">{divs}</div>
-    </div>
+      <div className="flex flex-row justify-center gap-4">{divs}</div>
+    </main>
   );
 }

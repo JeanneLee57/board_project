@@ -24,7 +24,7 @@ body {
 
 @layer base {
   h1 {
-    @apply text-2xl mt-5 mb-5;
+    @apply text-2xl mt-5;
   }
   h2 {
     @apply text-xl;
@@ -32,6 +32,10 @@ body {
 }
 
 input {
+  outline: none;
+}
+
+select {
   outline: none;
 }
 

@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import { connectDB } from "@/util/database";
 import { Item } from "./ItemList";
 
-export const ITEMS_PER_PAGE = 1;
+export const ITEMS_PER_PAGE = 10;
 
 export default async function Board(props: {
   searchParams: { page?: string };
@@ -34,10 +34,12 @@ export default async function Board(props: {
         .toArray();
 
   return (
-    <div className="h-full w-full">
-      <h1 className="h-full">게시글 페이지</h1>
+    <main className="h-full w-full mt-12 mb-20">
+      <h1 className="h-full w-80 border-b border-gray-400 pb-6 mb-4">
+        전체 글
+      </h1>
       <ItemList items={items} />
-      <div className="flex flex-row justify-center gap-4">{divs}</div>
-    </div>
+      <div className="flex flex-row justify-center gap-x-8">{divs}</div>
+    </main>
   );
 }

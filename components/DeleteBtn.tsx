@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function DeleteBtn(props: { postId: string }) {
   const router = useRouter();
@@ -20,7 +22,8 @@ export default function DeleteBtn(props: { postId: string }) {
         }
       }}
     >
-      🗑️
+      <FontAwesomeIcon icon={faTrash} size="lg" className="text-blue-900" />{" "}
+      삭제
     </button>
   );
 }

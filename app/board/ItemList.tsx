@@ -2,6 +2,10 @@ import { EngtoKor } from "@/util/convertCategory";
 import { ObjectId } from "mongodb";
 import Link from "next/link";
 import { WithId, Document } from "mongodb";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export interface Comment {
   id: number;
@@ -37,7 +41,13 @@ const ItemList: React.FC<ItemProps> = (props) => {
             className="flex justify-between relative gap-x-6 py-5 w-full"
           >
             <div>
-              <p>{EngtoKor(item.category)}</p>
+              <span
+                className={`${
+                  item.category === "frontend" ? "bg-teal-500" : "bg-sky-500"
+                } text-white px-2 py-1 rounded-md `}
+              >
+                {EngtoKor(item.category)}
+              </span>
               <Link href={`/board/detail/${item._id}`}>
                 <h2 className="font-semibold leading-6 mt-3 mb-3 text-gray-900">
                   {item.title}
@@ -47,8 +57,21 @@ const ItemList: React.FC<ItemProps> = (props) => {
                 {item.content.substring(0, 200)}
               </p>
               <div>
-                <span className="mr-3">좋아요 {item.likes}</span>
-                <span>댓글 {item.comment.length}</span>
+                <span className="mr-3">
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    size="sm"
+                    className="mr-2 text-rose-500"
+                  />
+                  {item.likes}
+                </span>
+                <span>
+                  <FontAwesomeIcon
+                    icon={faMessage}
+                    className="mr-2 text-neutral-700"
+                  />
+                  {item.comment.length}
+                </span>
               </div>
             </div>
             <div className="mt-3 mb-3 bottom-0 flex flex-col justify-between">
