@@ -6,6 +6,7 @@ export default function Button(props: { category?: string; count: number }) {
 
   return (
     <button
+      className="text-xl hover:scale-105 active:translate-y-0.5"
       onClick={() =>
         router.push(
           `/board${props.category ? "/" + props.category : ""}?page=${

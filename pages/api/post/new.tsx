@@ -6,10 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Item } from "@/app/board/ItemList";
 import { KortoEng } from "@/util/convertCategory";
 
-type KeysToAdd = Pick<
-  Item,
-  "category" | "author" | "date" | "likes" | "comment"
->;
+type KeysToAdd = Pick<Item, "author" | "date" | "likes" | "comment">;
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +19,6 @@ export default async function handler(
     .slice(0, -1);
 
   const keysToAdd: KeysToAdd = {
-    category: KortoEng(req.body.category),
     author: sessionRes!.user!.name!,
     likes: "0",
     comment: [],
