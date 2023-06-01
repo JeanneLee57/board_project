@@ -8,7 +8,8 @@ import Error from "@/components/Error";
 import DeleteBtn from "@/components/DeleteBtn";
 import { EngtoKor } from "@/util/convertCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faMessage, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
@@ -35,7 +36,7 @@ export default async function Detail(props: { params: { postId: string } }) {
           <span className="mx-2">|</span>
           <span>{item.date.slice(0, 10)}</span>
         </div>
-        {session!.user!.name! === item.author && (
+        {session && session!.user!.name! === item.author && (
           <div className="my-4">
             <Link href={`/board/edit/${item._id}`} className="mr-4">
               <FontAwesomeIcon
@@ -50,20 +51,58 @@ export default async function Detail(props: { params: { postId: string } }) {
         )}
         <p className="w-5/6 text-lg leading-relaxed">{item.content}</p>
       </article>
-      <div className="mb-10">
+      {session && (
+        <>
+          <h4 className="mb-1">
+            <FontAwesomeIcon icon={faMessage} /> 댓글 작성하기
+          </h4>
+          <form
+            action={"/api/post/comment"}
+            method="POST"
+            className="flex items-center"
+          >
+            <textarea
+              required
+              name="content"
+              className="border border-gray-400 w-3/4 h-14 rounded-md"
+            />
+            <input
+              name="_id"
+              defaultValue={item._id.toString()}
+              className="hidden"
+            />
+            <button
+              className="px-2 h-14 ml-4 active:translate-y-0.5 flex items-center justify-center bg-zinc-600 text-neutral-200 rounded-md font-semibold hover:text-white transition-all border"
+              type="submit"
+            >
+              등록
+            </button>
+          </form>
+        </>
+      )}
+      <h4 className="mt-10">댓글 {item.comment.length}</h4>
+      <ul role="list" className="divide-y divide-gray-200 mb-10 w-5/6">
         {item.comment.length ? (
           item.comment.map((comment) => (
-            <div key={comment.id}>
-              <span className="mr-4">{comment.author}</span>
-              <span>{comment.date}</span>
+            <li className="gap-x-6 py-3" key={comment.id}>
+              <span className="mr-4 text-sm">{comment.author}</span>
+              <span className="text-gray-500 text-sm">
+                {comment.date.slice(0, 10)}
+              </span>
               <p>{comment.content}</p>
-              <p>좋아요 {comment.likes}</p>
-            </div>
+              <p>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className="text-rose-500 mr-2"
+                />
+                {comment.likes}
+              </p>
+            </li>
           ))
         ) : (
-          <div>댓글이 없어잉..🥲</div>
+          <li>댓글이 없어잉..🥲</li>
         )}
-      </div>
+      </ul>
     </main>
   );
 }
