@@ -10,16 +10,37 @@ import { EngtoKor } from "@/util/convertCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { WithId, Document } from "mongodb";
+import Heart from "@/components/Heart";
 
+export interface UserInfo extends WithId<Document> {
+  _id: ObjectId;
+  email: string | null;
+  image: string;
+  emailVerified: boolean | null;
+  likes?: { post: string[]; comment: string[] };
+}
+//유저 정보를 확인해서 isLiked를 지정
+//isLiked를 먼저 확인해서 하트의 색을 렌더링
+//isLiked=false 상태에서 하트를 누르면 fetch 요청을 보내서 likes의 수를 추가하고, 유저 정보의 likes 배열에서 id를 찾아서 추가하도록
+//isLiked=true 상태에서 하트를 누르면 fetch 요청을 보내스 likes의 수를 빼도록, 유저 정보의 likes 배열에서 id를 찾아서 제거하도록
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
   const item: Item | null = await db
     .collection<Item>("post")
     .findOne({ _id: new ObjectId(props.params.postId) });
-
   if (!item) return <Error />;
-  const session = await getServerSession(authOptions);
 
+  const session = await getServerSession(authOptions);
+  let testDb = (await connectDB).db("test");
+  const userInfo: UserInfo | null = await testDb
+    .collection<UserInfo>("users")
+    .findOne({ name: session!.user!.name });
+  const isLiked =
+    userInfo && userInfo.likes
+      ? userInfo.likes.post.includes(item._id.toString())
+      : false;
   return (
     <main className="mt-10">
       <article className="mb-10">
@@ -38,7 +59,7 @@ export default async function Detail(props: { params: { postId: string } }) {
         </div>
         {session && session!.user!.name! === item.author && (
           <div className="my-4">
-            <Link href={`/board/edit/${item._id}`} className="mr-4">
+            <Link href={`/board/edit/${item._id}`}>
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 size="lg"
@@ -53,7 +74,15 @@ export default async function Detail(props: { params: { postId: string } }) {
       </article>
       {session && (
         <>
-          <h4 className="mb-1">
+          <h4 className="mb-1 bg-neutral-200 p-1 w-5/6">
+            <Heart
+              isLiked={isLiked}
+              type={"post"}
+              postId={item._id.toString()}
+            />{" "}
+            게시글 좋아요
+          </h4>
+          <h4 className="mb-1 p-1">
             <FontAwesomeIcon icon={faMessage} /> 댓글 작성하기
           </h4>
           <form
