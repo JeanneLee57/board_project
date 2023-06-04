@@ -8,7 +8,7 @@ import { faMessage } from "@fortawesome/free-regular-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export interface Comment {
-  id: number;
+  id: string;
   content: string;
   author: string;
   likes: string;
