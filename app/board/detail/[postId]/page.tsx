@@ -41,6 +41,7 @@ export default async function Detail(props: { params: { postId: string } }) {
     userInfo && userInfo.likes
       ? userInfo.likes.post.includes(item._id.toString())
       : false;
+  const commentLikes = userInfo && userInfo.likes && userInfo.likes.comment;
   return (
     <main className="mt-10">
       <article className="mb-10">
@@ -59,7 +60,7 @@ export default async function Detail(props: { params: { postId: string } }) {
         </div>
         {session && session!.user!.name! === item.author && (
           <div className="my-4">
-            <Link href={`/board/edit/${item._id}`}>
+            <Link href={`/board/edit/${item._id}`} className="mr-2">
               <FontAwesomeIcon
                 icon={faPenToSquare}
                 size="lg"
@@ -119,10 +120,14 @@ export default async function Detail(props: { params: { postId: string } }) {
                 {comment.date.slice(0, 10)}
               </span>
               <p>{comment.content}</p>
-              <p>
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="text-rose-500 mr-2"
+              <p className="text-sm">
+                <Heart
+                  type={"comment"}
+                  postId={item._id.toString()}
+                  commentId={comment.id}
+                  isLiked={
+                    commentLikes ? commentLikes.includes(comment.id) : false
+                  }
                 />
                 {comment.likes}
               </p>

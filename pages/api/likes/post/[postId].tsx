@@ -1,7 +1,7 @@
 import { connectDB } from "@/util/database";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "../../auth/[...nextauth]";
 import { UserInfo } from "@/app/board/detail/[postId]/page";
 import { Item } from "@/app/board/ItemList";
 import { ObjectId } from "mongodb";
@@ -36,24 +36,21 @@ export default async function handler(
 
   const likesToUpdate = userInfo.likes || { post: [], comment: [] };
   if (req.method == "POST") {
-    if (req.body === "post") {
-      likesToUpdate.post = [...likesToUpdate.post, req.query.postId as string];
-      const updatedLikes = (parseInt(item.likes) + 1).toString();
-      let update = await forumDb.collection("post").updateOne(
-        { _id: new ObjectId(req.query.postId as string) },
-        {
-          $set: {
-            likes: updatedLikes,
-          },
-        }
-      );
-    }
+    likesToUpdate.post = [...likesToUpdate.post, req.query.postId as string];
+    const updatedLikes = (parseInt(item.likes) + 1).toString();
+    let update = await forumDb.collection("post").updateOne(
+      { _id: new ObjectId(req.query.postId as string) },
+      {
+        $set: {
+          likes: updatedLikes,
+        },
+      }
+    );
   }
   if (req.method === "DELETE") {
     const postIndex = likesToUpdate.post.findIndex(
       (el) => req.body.postId as string
     );
-    console.log(postIndex);
     likesToUpdate.post.splice(postIndex, 1);
     const updatedLikes = (parseInt(item.likes) - 1).toString();
     let update = await forumDb.collection("post").updateOne(
@@ -74,6 +71,5 @@ export default async function handler(
       },
     }
   );
-
   res.status(200).json("좋아요!");
 }

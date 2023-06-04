@@ -21,7 +21,7 @@ export default function DeleteBtn(props: { postId: string }) {
         }
       }}
     >
-      <FontAwesomeIcon icon={faTrash} size="lg" className="text-blue-900" />{" "}
+      <FontAwesomeIcon icon={faTrash} size="lg" className="text-blue-900" />
       삭제
     </button>
   );

@@ -8,6 +8,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 export default function Heart(props: {
   type: string;
   postId: string;
+  commentId?: string;
   isLiked: boolean;
 }) {
   const router = useRouter();
@@ -15,19 +16,31 @@ export default function Heart(props: {
     <button
       onClick={() => {
         if (props.isLiked) {
-          fetch(`/api/likes/${props.postId}`, {
-            method: "DELETE",
-            body: props.type,
-          }).then((res) => {
+          fetch(
+            `/api/likes/${props.type}/${
+              props.commentId
+                ? props.postId + "/" + props.commentId
+                : props.postId
+            }`,
+            {
+              method: "DELETE",
+            }
+          ).then((res) => {
             if (res.status === 200) {
               window.location.href = `http://localhost:3000/board/detail/${props.postId}`;
             }
           });
         } else {
-          fetch(`/api/likes/${props.postId}`, {
-            method: "POST",
-            body: props.type,
-          }).then((res) => {
+          fetch(
+            `/api/likes/${props.type}/${
+              props.commentId
+                ? props.postId + "/" + props.commentId
+                : props.postId
+            }`,
+            {
+              method: "POST",
+            }
+          ).then((res) => {
             if (res.status === 200) {
               window.location.href = `http://localhost:3000/board/detail/${props.postId}`;
             }
@@ -38,7 +51,7 @@ export default function Heart(props: {
       <FontAwesomeIcon
         icon={faHeart}
         size="lg"
-        className={`${props.isLiked ? "text-rose-500" : "text-gray-500"}`}
+        className={`${props.isLiked ? "text-rose-500" : "text-gray-500"} mr-1`}
       />
     </button>
   );
