@@ -9,10 +9,10 @@ import DeleteBtn from "@/components/DeleteBtn";
 import { EngtoKor } from "@/util/convertCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { WithId, Document } from "mongodb";
 import Heart from "@/components/Heart";
+import { redirect } from "next/navigation";
 
 export interface UserInfo extends WithId<Document> {
   _id: ObjectId;
@@ -21,10 +21,7 @@ export interface UserInfo extends WithId<Document> {
   emailVerified: boolean | null;
   likes?: { post: string[]; comment: string[] };
 }
-//유저 정보를 확인해서 isLiked를 지정
-//isLiked를 먼저 확인해서 하트의 색을 렌더링
-//isLiked=false 상태에서 하트를 누르면 fetch 요청을 보내서 likes의 수를 추가하고, 유저 정보의 likes 배열에서 id를 찾아서 추가하도록
-//isLiked=true 상태에서 하트를 누르면 fetch 요청을 보내스 likes의 수를 빼도록, 유저 정보의 likes 배열에서 id를 찾아서 제거하도록
+
 export default async function Detail(props: { params: { postId: string } }) {
   let db = (await connectDB).db("forum");
   const item: Item | null = await db
@@ -33,6 +30,9 @@ export default async function Detail(props: { params: { postId: string } }) {
   if (!item) return <Error />;
 
   const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect("/");
+  }
   let testDb = (await connectDB).db("test");
   const userInfo: UserInfo | null = await testDb
     .collection<UserInfo>("users")
