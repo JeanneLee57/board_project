@@ -22,7 +22,7 @@ export const members: Member[] = [
     id: 1,
     name: "김진솔",
     img: "https://avatars.githubusercontent.com/u/80370226?v=4",
-    email: "wlsthf75@gamil.com",
+    email: "wlsthf75@gmail.com",
     github: "https://github.com/jinsoul75",
     blog: "https://summerr.tistory.com/",
     intro:
@@ -111,15 +111,22 @@ export default function About() {
             </ul>
             <p className="my-1">
               <FontAwesomeIcon icon={faHouse} className="mr-1" />
-              {member.blog}
+              <a className="my-1 underline decoration-solid" href={member.blog}>
+                {member.blog}
+              </a>
+            </p>
+            <p className="my-1">
+              <FontAwesomeIcon icon={faGithub} className="mr-1" />
+              <a
+                className="my-1 underline decoration-solid"
+                href={member.github}
+              >
+                {member.github}
+              </a>
             </p>
             <p className="my-1">
               <FontAwesomeIcon icon={faEnvelope} className="mr-1" />
               {member.email}
-            </p>
-            <p className="my-1">
-              <FontAwesomeIcon icon={faGithub} className="mr-1" />
-              {member.github}
             </p>
           </li>
         ))}
