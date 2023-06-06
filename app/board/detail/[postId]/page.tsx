@@ -9,7 +9,6 @@ import DeleteBtn from "@/components/DeleteBtn";
 import { EngtoKor } from "@/util/convertCategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { WithId, Document } from "mongodb";
 import Heart from "@/components/Heart";
@@ -122,16 +121,6 @@ export default async function Detail(props: { params: { postId: string } }) {
                 user={session.user!.name as string}
                 itemId={item._id.toString()}
               />
-              {/* <span className="mr-4 text-sm">{comment.author}</span>
-              <span className="text-gray-500 text-sm">
-                {comment.date.slice(0, 10)}
-              </span>
-              {session.user!.name === comment.author && (
-                <span className="text-sm text-gray-500">
-                  <FontAwesomeIcon icon={faTrash} />
-                </span>
-              )}
-              <p>{comment.content}</p> */}
               <p className="text-sm">
                 <Heart
                   type={"comment"}
