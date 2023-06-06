@@ -5,6 +5,6 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ["k.kakaocdn.net"],
+    domains: ["k.kakaocdn.net", "avatars.githubusercontent.com"],
   },
 };
