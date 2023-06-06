@@ -47,3 +47,8 @@ textarea {
 ul {
   list-style-position: inside;
 }
+
+pre {
+  white-space: pre-wrap;
+  word-spacing: -7px;
+}

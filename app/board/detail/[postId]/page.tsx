@@ -44,7 +44,7 @@ export default async function Detail(props: { params: { postId: string } }) {
       : false;
   const commentLikes = userInfo && userInfo.likes && userInfo.likes.comment;
   return (
-    <main className="mt-10">
+    <main className="mt-10 w-full">
       <article className="mb-10">
         <span
           className={`${
@@ -72,7 +72,7 @@ export default async function Detail(props: { params: { postId: string } }) {
             <DeleteBtn postId={item._id.toString()} />
           </div>
         )}
-        <p className="w-5/6 text-lg leading-relaxed">{item.content}</p>
+        <pre className="w-5/6 text-lg leading-relaxed">{item.content}</pre>
       </article>
       {session && (
         <>
