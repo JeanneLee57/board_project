@@ -43,3 +43,7 @@ textarea {
   outline: none;
   resize: none;
 }
+
+ul {
+  list-style-position: inside;
+}
