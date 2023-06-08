@@ -38,7 +38,7 @@ export default async function handler(
     }
     const commentToUpdate = item.comment;
     commentToUpdate.unshift({
-      id: commentToUpdate.length + Date().toLowerCase(),
+      id: commentToUpdate.length + Date().toLowerCase().slice(0, 20),
       content: req.body.content,
       ...keysToAdd,
     });
