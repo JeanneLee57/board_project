@@ -81,7 +81,7 @@ export default async function Detail(props: { params: { postId: string } }) {
               isLiked={isLiked}
               type={"post"}
               postId={item._id.toString()}
-            />{" "}
+            />
             게시글 좋아요
           </h4>
           <h4 className="mb-1 p-1">
