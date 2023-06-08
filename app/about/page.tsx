@@ -118,6 +118,7 @@ export default function About() {
             <p className="my-1">
               <FontAwesomeIcon icon={faGithub} className="mr-1" />
               <a
+                target="_blank"
                 className="my-1 underline decoration-solid"
                 href={member.github}
               >
