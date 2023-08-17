@@ -17,7 +17,7 @@ export interface Member {
   career: string[];
 }
 
-export const members: Member[] = [
+const members: Member[] = [
   {
     id: 1,
     name: "김진솔",
