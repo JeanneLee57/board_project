@@ -5,10 +5,10 @@ const options: any = { useNewUrlParser: true };
 let connectDB: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === "development") {
-  if (!global._mongo) {
-    global._mongo = new MongoClient(url, options).connect() as any;
+  if (!globalThis._mongo) {
+    globalThis._mongo = new MongoClient(url, options).connect();
   }
-  connectDB = globa._mongo;
+  connectDB = globalThis._mongo;
 } else {
   connectDB = new MongoClient(url, options).connect();
 }

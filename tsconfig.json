@@ -24,12 +24,12 @@
     }
   },
   "include": [
+    "src/app.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "pages/api/auth/[...nextauth].tsx",
     ".next/types/app/about/page.tsx"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }
