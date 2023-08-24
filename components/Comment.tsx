@@ -25,7 +25,7 @@ export default function Comment({
         method: "DELETE",
       }).then((res) => {
         if (res.status === 200) {
-          window.location.href = `http://localhost:3000/board/detail/${itemId}`;
+          window.location.href = `http://${process.env.NEXTAUTH_URL}/board/detail/${itemId}`;
         }
       });
     }
