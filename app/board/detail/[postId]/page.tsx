@@ -32,7 +32,7 @@ export default async function Detail(props: { params: { postId: string } }) {
 
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect("/");
+    redirect("/board/notice");
   }
   let testDb = (await connectDB).db("test");
   const userInfo: UserInfo | null = await testDb

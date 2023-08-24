@@ -62,7 +62,7 @@ const members: Member[] = [
   },
   {
     id: 4,
-    name: "이진화",
+    name: "이진화(Jeanne)",
     img: "https://avatars.githubusercontent.com/u/122351417?v=4",
     email: "jinhwa.lee.57@gmail.com",
     github: "https://github.com/JeanneLee57",
@@ -77,7 +77,13 @@ export default function About() {
   return (
     <main className="mx-16">
       <h1 className="my-10">프로젝트 소개</h1>
-      <h2>팀원 소개</h2>
+      <p>
+        이 프로젝트는 Next.js를 이용한 게시판 만들기 토이 프로젝트로, 팀원들이
+        같은 주제로 <b>솔로 프로젝트</b>를 진행하며 서로 코드리뷰를 하는
+        방식으로 진행되었습니다.
+      </p>
+      <p>진행 기간: 2023년 5월 24일 ~ 2023년 6월 9일(2주)</p>
+      <h2 className="mt-10">팀원 소개</h2>
       <div className="w-full flex items-center justify-center my-12">
         <ul className="flex justify-between items-start w-120 flex-wrap">
           {members.map((member) => (

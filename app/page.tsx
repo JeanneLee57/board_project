@@ -1,7 +1,8 @@
 export default function Home() {
   return (
-    <main>
-      <h1>메인</h1>
+    <main className="m-6">
+      게시판 프로젝트 <br />
+      by Jeanne Lee
     </main>
   );
 }

@@ -18,7 +18,7 @@ export default async function Header() {
   return (
     <TwHeader>
       <span className="flex w-1/3 justify-between md:w-1/6">
-        <TwLink href="/">로고</TwLink> <TwLink href="/about">about</TwLink>
+        <TwLink href="/">홈</TwLink> <TwLink href="/about">about</TwLink>
         <TwLink href="/board">게시판</TwLink>
       </span>
       <span>
