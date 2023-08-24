@@ -27,7 +27,7 @@ export default function Heart(props: {
             }
           ).then((res) => {
             if (res.status === 200) {
-              window.location.href = `http://${process.env.NEXTAUTH_URL}/board/detail/${props.postId}`;
+              window.location.href = `${process.env.NEXTAUTH_URL}/board/detail/${props.postId}`;
             }
           });
         } else {
@@ -42,7 +42,7 @@ export default function Heart(props: {
             }
           ).then((res) => {
             if (res.status === 200) {
-              window.location.href = `http://${process.env.NEXTAUTH_URL}/board/detail/${props.postId}`;
+              window.location.href = `${process.env.NEXTAUTH_URL}/board/detail/${props.postId}`;
             }
           });
         }

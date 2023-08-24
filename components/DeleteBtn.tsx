@@ -14,7 +14,7 @@ export default function DeleteBtn(props: { postId: string }) {
             (res) => {
               if (res.status === 200) {
                 /* useRouter의 router.push()로 refresh가 되지 않음 */
-                window.location.href = `http://${process.env.NEXTAUTH_URL}/board`;
+                window.location.href = `${process.env.NEXTAUTH_URL}/board`;
               }
             }
           );

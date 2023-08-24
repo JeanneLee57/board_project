@@ -21,7 +21,7 @@ export default function Notice() {
   return (
     <p className="w-full text-center mt-12">
       <h1>게시글 조회를 위해서는 로그인해주세요.</h1>
-      <h2>{seconds}초 뒤 메인으로 이동합니다.</h2>
+      <h2>{seconds}초 뒤 홈으로 이동합니다.</h2>
       <a className="underline" href="/">
         홈으로 가기
       </a>
